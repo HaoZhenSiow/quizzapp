@@ -1,0 +1,142 @@
+doctype html
+html
+	head
+		meta(charset="utf-8")
+		meta(content="width=device-width initial-scale=1" name="viewport")
+		link(rel="stylesheet" href="stylesheets/codingKnight.css")
+		link(rel="stylesheet" href="stylesheets/style.css")
+		link(rel="stylesheet" href="font/roboto/roboto.css")
+		link(rel="shortcut icon" type="image/jpg" href="/img/icon/favicon.ico")
+		title IMBIBE | Local Storage
+	body
+		div.sticky
+			div.cardset#deck_cover
+			div#search-bar
+				form
+					input(type="text" placeholder="Search..." id="searchDeck")
+					input(type="text" placeholder="Search..." id="searchCard" style="display:none")
+		//- ADD DECK MODAL
+		div.modal#add_deck_modal
+			div.modal-content
+				span.close#add_deck_modal &times;
+				form.create_deck.modal_form
+					div.text-input-1
+							input#deck_title(name='deck-title' type='text' placeholder=' ' required spellcheck="false")
+							label(for='deck-title') Deck Title
+					div.radio-group
+						label(for="deck-color") Deck Colour
+						div.radio
+							input(type="radio" value="default" name="deck-color" checked="checked")
+							span.radio(onclick="checkedRadio('default')")
+						div.radio
+							input(type="radio" value="red" name="deck-color")
+							span.radio.red(onclick="checkedRadio('red')")
+						div.radio
+							input(type="radio" value="blue" name="deck-color")
+							span.radio.blue(onclick="checkedRadio('blue')")
+						div.radio
+							input(type="radio" value="yellow" name="deck-color")
+							span.radio.yellow(onclick="checkedRadio('yellow')")
+						div.radio
+							input(type="radio" value="green" name="deck-color")
+							span.radio.green(onclick="checkedRadio('green')")
+						div.radio
+							input(type="radio" value="orange" name="deck-color")
+							span.radio.orange(onclick="checkedRadio('orange')")
+						div.radio
+							input(type="radio" value="purple" name="deck-color")
+							span.radio.purple(onclick="checkedRadio('purple')")
+						div.radio
+							input(type="radio" value="pink" name="deck-color")
+							span.radio.pink(onclick="checkedRadio('pink')")
+						div.radio
+							input(type="radio" value="black" name="deck-color")
+							span.radio.black(onclick="checkedRadio('black')")
+					div.deck-type
+						label(for="deck-type") Deck Type
+						select(name="deck-type" id="deck_type")
+							option(value="true") Spaced Repetition
+							option(value='') Active Recall
+					div.shuffle
+						label(for="shuffle") Shuffle in Study Mode
+						input(name="shuffle" type="checkbox")
+					button(type="submit" style="width: 100%;") SAVE CARD SET
+
+		//- ADD CARD MODAL
+		div.modal#add_card_modal
+			div.modal-content
+				span.close#add_card_modal &times;
+				h2 Add Card
+				form.create_card.modal_form(style="margin-top: 2em;")
+					label(for="question") Card Text
+					textarea(name="question" rows="5" required spellcheck="false")
+					label(for="answer") Card Answer
+					textarea(name="answer" rows="3" required spellcheck="false")
+					button(type="submit" style="width: 100%;") SAVE CARD
+
+		//- FILTER MODAL
+		div.modal#filter_modal
+			div.modal-content#fliter_modal
+				span.close#fliter_modal &times;
+				h2 Filter
+				form.adjust_fliter.modal_form(style="margin-top: 2em;")
+					input(type="checkbox" id="box1" name="box1")
+					label(for="box1") box 1
+					br
+					input(type="checkbox" id="box2" name="box2")
+					label(for="box2") box 2
+					br
+					input(type="checkbox" id="box3" name="box3")
+					label(for="box3") box 3
+					br
+					input(type="checkbox" id="box4" name="box4")
+					label(for="box4") box 4
+					br
+					input(type="checkbox" id="box5" name="box5")
+					label(for="box5") box 5
+					br
+					input(type="checkbox" id="box6" name="box6")
+					label(for="box6") box 6
+					br
+					input(type="checkbox" id="box7" name="box7")
+					label(for="box7") box 7
+					br
+					input(type="checkbox" id="box8" name="box8")
+					label(for="box8") box 8
+					br
+					br
+					button(type="submit" style="width: 100%;") Filter	
+
+		main.container.local-container.noselect
+		main.container.card-list(style='display:none')
+		main#studycard.noselect.studyquiz
+			div#card
+				div#top
+					h4.pointer(onclick="closeStudy()") HTML
+					h4 CARD 1 / 100
+				p#qns Defines a table
+				div#control
+					i.fas.fa-trash-alt
+					i.fas.fa-edit
+				hr
+				p#ans [show answer]
+			div#btm
+				i.fas.fa-long-arrow-alt-left(onclick="previous()")
+				i.fas.fa-long-arrow-alt-right(onclick="next()")
+		main#quizmode.studyquiz
+			div#card
+				div#top
+					h4.pointer(onclick="endQuiz()") HTML
+					h4 CARD 1 / 100
+				p#qns Defines a table
+			div#keyans
+				form
+					textarea(name="question" rows="5" required placeholder="type ans here" autofocus)
+					button(type="submit" style="width: 100%;") Submit
+		a(id="create" style="cursor:pointer") +
+		script(src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous")
+		script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous")
+		script(src="js/jquery.ui.touch-punch.min.js")
+		script(src="js/codingknight.js")
+		script(src="js/main.js")
+		script(src="https://kit.fontawesome.com/8bbfccdf39.js" crossorigin="anonymous")

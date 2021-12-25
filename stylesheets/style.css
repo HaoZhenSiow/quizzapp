@@ -1,0 +1,411 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  color: #1E1E1E;
+  min-width: 340px;
+}
+.sticky {
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  background: white;
+  padding: 10px calc(25px + (200 - 25) * (100vw - 414px) / (1920 - 414)) 3px;
+}
+.sticky #search-bar form {
+  box-shadow: 0 0 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.sticky #search-bar form input {
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 0.2rem 0.4em;
+}
+.sticky #deck_cover {
+  display: none;
+  margin: 0;
+}
+a#create {
+  text-decoration: none;
+  background: #3EB9EC;
+  color: white;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-weight: 900;
+  font-size: 2rem;
+  padding: 0.3em;
+  border-radius: 8px;
+  line-height: 1.5rem;
+}
+.cardset {
+  box-shadow: 0px 0px 5px #888888;
+  border-radius: 3px;
+  padding: 0.5em 1em;
+  margin: 10px 0;
+  min-width: 300px;
+  position: relative;
+}
+.cardset#deck_cover div:first-child {
+  display: flex;
+  justify-content: space-between;
+}
+.cardset#deck_cover div:first-child i {
+  cursor: pointer;
+  font-size: 1.5em;
+}
+.cardset h3 {
+  font-weight: 700;
+  padding: 0;
+  line-height: 1em;
+}
+.cardset .control {
+  display: flex;
+  justify-content: flex-end;
+  line-height: 1em;
+  position: relative;
+}
+.cardset .control a {
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  color: #1E1E1E;
+  cursor: pointer;
+}
+.cardset .control .filter {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  pointer-events: auto;
+}
+.cardset .control .more-control {
+  display: none;
+  flex-direction: column;
+  background: white;
+  position: absolute;
+  right: -0.3em;
+  z-index: 2;
+  border-radius: 0.4em;
+}
+.cardset .control .more-control a {
+  margin: 0;
+  padding: 0.4em;
+  cursor: pointer;
+}
+.cardset.red {
+  background: #E21D35;
+}
+.cardset.default {
+  background: white;
+}
+.cardset.blue {
+  background: #3EB9EC;
+}
+.cardset.yellow {
+  background: #FCD012;
+}
+.cardset.green {
+  background: #73B550;
+}
+.cardset.orange {
+  background: #F4A51D;
+}
+.cardset.purple {
+  background: #744A99;
+}
+.cardset.pink {
+  background: #E95795;
+}
+.cardset.black {
+  background: #1C1B21;
+}
+.cardset.red,
+.cardset.purple,
+.cardset.pink,
+.cardset.black {
+  color: #ECECEC;
+}
+.cardset.red .control a,
+.cardset.purple .control a,
+.cardset.pink .control a,
+.cardset.black .control a {
+  color: #ECECEC;
+}
+.cardset.red .more-control a,
+.cardset.purple .more-control a,
+.cardset.pink .more-control a,
+.cardset.black .more-control a {
+  color: #1E1E1E;
+}
+@media only screen and (max-width: 720px) {
+  .cardset:last-child {
+    margin-bottom: 100px;
+  }
+}
+.card {
+  box-shadow: 0px 0px 5px #888888;
+  border-radius: 3px;
+  padding: 0.5em 1em;
+  margin: 10px 0;
+  min-width: 300px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+.card p {
+  padding: 0;
+  margin: 0;
+  line-height: 1.5em;
+}
+.card i {
+  position: absolute;
+  top: 0.5em;
+  right: 1em;
+}
+.card.hidden {
+  color: #cbcbcb;
+  box-shadow: 0px 0px 5px #d4d4d4;
+}
+.card.hidden hr {
+  border-top: 1px solid #cbcbcb;
+}
+.card a {
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  color: #1E1E1E;
+  cursor: pointer;
+}
+.card .filter {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  pointer-events: auto;
+}
+.card .more-control {
+  display: none;
+  flex-direction: column;
+  background: white;
+  position: absolute;
+  right: 1em;
+  z-index: 2;
+  border-radius: 0.4em;
+}
+.card .more-control a {
+  margin: 0;
+  padding: 0.4em;
+  cursor: pointer;
+  line-height: 1em;
+}
+form.modal_form > div {
+  margin: 1rem 0;
+}
+form.modal_form label {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+form.modal_form div.radio-group label {
+  display: block;
+}
+form.modal_form div.radio {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+form.modal_form div.radio input[type="radio"],
+form.modal_form div.radio input[type="checkbox"] {
+  display: none;
+}
+form.modal_form div.radio input[type="radio"]:checked ~ span.radio:after,
+form.modal_form div.radio input[type="checkbox"]:checked ~ span.radio:after {
+  transform: translate(-50%, -50%) scale(1);
+}
+form.modal_form span.radio {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  border: 0.4rem solid #ECECEC;
+  position: relative;
+}
+form.modal_form span.radio:after {
+  content: "";
+  height: 0.8rem;
+  width: 0.8rem;
+  border-radius: 50%;
+  background: #ECECEC;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 300ms ease-in-out 0s;
+}
+form.modal_form span.radio.red {
+  border-color: #E21D35;
+}
+form.modal_form span.radio.red:after {
+  background: #E21D35;
+}
+form.modal_form span.radio.blue {
+  border-color: #3EB9EC;
+}
+form.modal_form span.radio.blue:after {
+  background: #3EB9EC;
+}
+form.modal_form span.radio.yellow {
+  border-color: #FCD012;
+}
+form.modal_form span.radio.yellow:after {
+  background: #FCD012;
+}
+form.modal_form span.radio.green {
+  border-color: #73B550;
+}
+form.modal_form span.radio.green:after {
+  background: #73B550;
+}
+form.modal_form span.radio.orange {
+  border-color: #F4A51D;
+}
+form.modal_form span.radio.orange:after {
+  background: #F4A51D;
+}
+form.modal_form span.radio.purple {
+  border-color: #744A99;
+}
+form.modal_form span.radio.purple:after {
+  background: #744A99;
+}
+form.modal_form span.radio.pink {
+  border-color: #E95795;
+}
+form.modal_form span.radio.pink:after {
+  background: #E95795;
+}
+form.modal_form span.radio.black {
+  border-color: #1C1B21;
+}
+form.modal_form span.radio.black:after {
+  background: #1C1B21;
+}
+form.modal_form #deck_type {
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  color: #1E1E1E;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+form.modal_form div.shuffle input {
+  transform: scale(1.5);
+  margin-left: 0.5em;
+}
+form.modal_form button {
+  background: #3EB9EC;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.5em;
+}
+form.modal_form textarea {
+  width: 100%;
+  resize: none;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+div.modal-content#fliter_modal {
+  width: 40%;
+}
+main.studyquiz {
+  display: none;
+  padding: 0 calc(25px + (700 - 25) * (100vw - 414px) / (1920 - 414));
+  padding-top: 5vh;
+}
+main.studyquiz div#card {
+  background: #3EB9EC;
+  padding: 1em;
+}
+main.studyquiz div#card div#top {
+  display: flex;
+  justify-content: space-between;
+}
+main.studyquiz div#card p#qns {
+  font-size: 1.5em;
+  margin: 0.5em 0;
+  height: 30vh;
+  overflow-y: overlay;
+}
+main.studyquiz div#card hr {
+  border: none;
+  border-top: 2px solid #232323;
+  margin: 1rem 0;
+}
+main.studyquiz div#card p#ans {
+  height: 20vh;
+  margin: 0.5em 0;
+}
+main.studyquiz div#card div#control {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.25em;
+}
+main.studyquiz div#card div#control i {
+  margin-left: 1rem;
+}
+main.studyquiz div#btm {
+  background: #3EB9EC;
+  display: flex;
+  justify-content: space-between;
+  font-size: 3em;
+  padding: 0 1rem;
+  margin-top: 1vh;
+}
+main.studyquiz div#keyans {
+  background: #3EB9EC;
+  padding: 1rem;
+  margin-top: 1vh;
+}
+main.studyquiz div#keyans form textarea {
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.5rem;
+  resize: none;
+  font-family: 'Roboto', sans-serif;
+}
+.noselect {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+.grab {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+.grab:active {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+.pointer {
+  cursor: pointer;
+}
