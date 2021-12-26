@@ -426,7 +426,6 @@ $('div#add_card_modal').on('modalClose', () => {
 	targeted_card = '';
 	form_question.value = '';
 	form_answer.value = '';
-	form_autocheck.checked = false;
 	$('div#add_card_modal').hide();
 });
 
