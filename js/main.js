@@ -335,6 +335,7 @@ function swap_card_position(){
 
 const form_question = $("form.create_card")[0]['question'];
 const form_answer = $("form.create_card")[0]['answer'];
+const form_autocheck = $("form.create_card")[0]['autocheck'];
 var targeted_card = '';
 const CARDS_SEARCH = document.querySelector('input#searchCard');
 CARDS_SEARCH.onkeyup = function() {searchCard();}
@@ -398,6 +399,10 @@ form_answer.addEventListener('keydown', (e) => {
 		form_answer.selectionEnd = start + 1;
 	}
 });
+// form_autocheck.addEventListener('change', (e)=> {
+// 	console.log(form_autocheck.checked);
+// });
+
 
 function openAddCardModal() {
 	$('div#add_card_modal').show();
@@ -414,12 +419,14 @@ function edit_card(position) {
 	$('div#add_card_modal').show();
 	form_question.value = targeted_card.q;
 	form_answer.value = targeted_card.a;
+	form_autocheck.checked = targeted_card.autocheck;
 }
 
 $('div#add_card_modal').on('modalClose', () => {
 	targeted_card = '';
 	form_question.value = '';
 	form_answer.value = '';
+	form_autocheck.checked = false;
 	$('div#add_card_modal').hide();
 });
 
@@ -427,18 +434,20 @@ $("form.create_card").submit( e => {
 	e.preventDefault();
 	let question = form_question.value;
 	let answer = form_answer.value;
-	targeted_card?update_target_card(question,answer):append_card(question, answer);
+	let autocheck = form_autocheck.checked;
+	targeted_card?update_target_card(question,answer, autocheck):append_card(question, answer, autocheck);
 	$('div#add_card_modal').trigger('modalClose');
 	refreshCardList();
 });
 
-function append_card(question,answer) {
+function append_card(question,answer, autocheck) {
 	let cards = targeted_deck.cards;
 	let cardsLen = cards.length;
 	let new_card = {
 		"position": cardsLen+1,
 		"q": question,
 		"a": answer,
+		"autocheck": autocheck,
 		"box": 1,
 		"tier": 0,
 		"quiz_date": 0,
@@ -449,9 +458,10 @@ function append_card(question,answer) {
 	localStorage.setItem('decks', JSON.stringify(decks));
 }
 
-function update_target_card(question,answer) {
+function update_target_card(question,answer, autocheck) {
 	targeted_card.q = question;
 	targeted_card.a = answer;
+	targeted_card.autocheck = autocheck;
 	localStorage.setItem('decks', JSON.stringify(decks));
 }
 
@@ -670,6 +680,8 @@ function renderQuiz() {
 		$('main#quizmode.studyquiz').html(html);
 	}
 	$("form#quizAns")[0][0].focus();
+	let autocheck = targeted_card.autocheck;
+	autocheck?autocheckAns():null;
 	$("form#quizAns").keydown((e) => {
 		if (e.keyCode === 13 && e.shiftKey) {
 			e.preventDefault();
@@ -734,6 +746,18 @@ function selectCardForQuiz() {
 		}
 	}
 	return quizDeck;
+}
+
+function autocheckAns() {
+	$("form#quizAns").keyup((e) => {
+		let a = targeted_card.a;
+		let input = document.querySelector("#keyans > form > textarea");
+		if (input.value === a) {
+			input.style.background = "#e7ffe7";
+		} else {
+			input.style.background = "revert";
+		}
+	});
 }
 
 function adjustCard(result) {
@@ -940,8 +964,4 @@ function shuffle(array) {
     array[randomIndex] = temporaryValue;
   }
   return array;
-}
-
-function test(text) {
-	console.log(text);
 }

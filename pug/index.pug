@@ -66,8 +66,11 @@ html
 		div.modal#add_card_modal
 			div.modal-content
 				span.close#add_card_modal &times;
-				h2 Add Card
+				h2 Add Cardsda
 				form.create_card.modal_form(style="margin-top: 2em;")
+					input(type="checkbox" name="autocheck")
+					label(for="autocheck") Autocheck
+					br
 					label(for="question") Card Text
 					textarea(name="question" rows="5" required spellcheck="false")
 					label(for="answer") Card Answer
