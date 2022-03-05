@@ -775,15 +775,25 @@ function adjustCard(result) {
 			targeted_card['tier']++;
 			
 			
-			if(targeted_card['tier'] == 3 && targeted_card['box'] < 7) {
+			if(targeted_card['tier'] == 3 && targeted_card['box'] < 3) {
 				targeted_card['tier'] = 0;
 				targeted_card.box++;
 			}
 
-			if(targeted_card['tier'] == 6 && targeted_card['box'] == 7) {
+			if(targeted_card['tier'] == 4 && targeted_card['box'] < 5) {
 				targeted_card['tier'] = 0;
 				targeted_card.box++;
 			}
+
+			if(targeted_card['tier'] == 6 && targeted_card['box'] < 8) {
+				targeted_card['tier'] = 0;
+				targeted_card.box++;
+			}
+
+			// if(targeted_card['tier'] == 99 && targeted_card['box'] == 8) {
+			// 	targeted_card['tier'] = 0;
+			// 	targeted_card.box++;
+			// }
 
 			let milliseconds = 0;
 			switch (targeted_card.box) {
@@ -811,6 +821,30 @@ function adjustCard(result) {
 				case 8:
 					milliseconds = 12*4*7*24*60*60000;
 					break;
+				// case 1:
+				// 	milliseconds = 1;
+				// 	break;
+				// case 2:
+				// 	milliseconds = 1;
+				// 	break;
+				// case 3:
+				// 	milliseconds = 1;
+				// 	break;
+				// case 4:
+				// 	milliseconds = 1;
+				// 	break;
+				// case 5:
+				// 	milliseconds = 1;
+				// 	break;
+				// case 6:
+				// 	milliseconds = 1;
+				// 	break;
+				// case 7:
+				// 	milliseconds = 1;
+				// 	break;
+				// case 8:
+				// 	milliseconds = 1;
+				// 	break;
 			}
 			targeted_card.quiz_date = new Date().getTime() + milliseconds;
 			targeted_card.mistake=false;
