@@ -851,9 +851,9 @@ function adjustCard(result) {
 			break;
 		//space repetition card wrong;	
 		case (type && !result):
-			targeted_card.mistake?
-			(targeted_card['tier']=0, targeted_card.box=1, alert('The correct ans: ' + targeted_card.a)):
-			targeted_card.mistake=true;
+			// targeted_card.mistake?
+			(targeted_card['tier']=0, targeted_card.box=1, alert('The correct ans: ' + targeted_card.a));
+			// targeted_card.mistake=true;
 			break;
 		//active recall card correct;
 		case (!type && result):
