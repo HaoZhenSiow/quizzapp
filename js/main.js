@@ -710,13 +710,18 @@ function renderQuiz() {
 		if (input.value === a) {
 			input.style.background = "#e7ffe7";
 			adjustCard(true);
+			targeted_card = "";
+			setTimeout(() => {renderQuiz()},500);
 		} else {
-			input.style.background = "#ffd4d4";
-			adjustCard(false);
-			navigator.clipboard.writeText(input.value);
+			let conmf = confirm("are you sure?");
+			if(conmf){
+				input.style.background = "#ffd4d4";
+				adjustCard(false);
+				navigator.clipboard.writeText(input.value);
+				targeted_card = "";
+				setTimeout(() => {renderQuiz()},500);
+			}
 		}
-		targeted_card = "";
-		setTimeout(() => {renderQuiz()},500);
 	});
 }
 
