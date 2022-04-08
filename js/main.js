@@ -780,17 +780,27 @@ function adjustCard(result) {
 			targeted_card['tier']++;
 			
 			
-			if(targeted_card['tier'] == 3 && targeted_card['box'] < 3) {
+			if(targeted_card['tier'] === 3 && targeted_card['box'] < 3) {
 				targeted_card['tier'] = 0;
 				targeted_card.box++;
 			}
 
-			if(targeted_card['tier'] == 4 && targeted_card['box'] < 5) {
+			if(targeted_card['tier'] === 4 && targeted_card['box'] === 3) {
 				targeted_card['tier'] = 0;
 				targeted_card.box++;
 			}
 
-			if(targeted_card['tier'] == 6 && targeted_card['box'] < 8) {
+			if(targeted_card['tier'] === 6 && targeted_card['box'] === 4) {
+				targeted_card['tier'] = 0;
+				targeted_card.box++;
+			}
+
+			if(targeted_card['tier'] == 9 && targeted_card['box'] < 7) {
+				targeted_card['tier'] = 0;
+				targeted_card.box++;
+			}
+
+			if(targeted_card['tier'] == 10 && targeted_card['box'] === 7) {
 				targeted_card['tier'] = 0;
 				targeted_card.box++;
 			}
