@@ -220,6 +220,7 @@ function openCardList(position) {
 	$(DECK_CONTAINER).hide();
 	$('a#create').hide();
 	$(DECKS_SEARCH).hide();
+	$('#quizzAll').hide();
 	$(DECK_HEADER).show();
 	$(CARD_LIST).show();
 	targeted_deck = decks[position-1];
@@ -234,6 +235,7 @@ function closeCardList() {
 	$(DECK_CONTAINER).show();
 	$('a#create').show();
 	$(DECKS_SEARCH).show();
+	$('#quizzAll').show();
 	targeted_deck = '';
 	render_decks();
 	CARDS_SEARCH.value='';
@@ -637,8 +639,12 @@ function startQuiz(position) {
 	$('div.sticky').hide();
 	$('main#quizmode').show();
 	$('a#create').hide();
-	targeted_deck = decks[position-1];
-	renderQuiz(position);
+	if (position === 'all') {
+		targeted_deck = 'all'
+	} else {
+		targeted_deck = decks[position-1]
+	}
+	renderQuiz();
 }
 
 function endQuiz() {
@@ -657,14 +663,29 @@ function renderQuiz() {
 		alert("No Card in Quiz Deck!!!");
 		endQuiz();
 	} else {
-		let count = (quizDeck.length>1)?quizDeck.length:'LAST';
-		targeted_deck.deck_type?null:count=redoCount;
-		targeted_card = quizDeck[Math.floor(Math.random()*quizDeck.length)];
+		let sortedCards = sortCards(quizDeck);
+		// console.log(sortedCards);
+		targeted_card = sortedCards[0]
+		// targeted_card = quizDeck[Math.floor(Math.random()*quizDeck.length)];
 		let q = formatText(targeted_card.q);
+		let count = (quizDeck.length>1)?quizDeck.length:'LAST';
+		let deckTitle = '';
+		// console.log(count, targeted_deck.deck_type);
+		switch (targeted_deck.deck_type) {
+			case false:
+				count=redoCount;
+				deckTitle = targeted_deck.title;
+				break;
+			case true:
+				deckTitle = targeted_deck.title;
+				break;
+			default:
+				deckTitle = targeted_card.title;
+		}
 		let html = `
 			<div id="card">
 				<div id="top">
-				<h4 class="pointer" onclick="endQuiz()">${targeted_deck.title}</h4>
+				<h4 class="pointer" onclick="endQuiz()">${deckTitle}</h4>
 				<h4>${[count]} CARDS LEFT</h4>
 				</div>
 				<p id="qns">${q}</p>
@@ -726,6 +747,23 @@ function renderQuiz() {
 }
 
 function selectCardForQuiz() {
+	if (targeted_deck === 'all') {
+		let quizDeck = []
+		let allCards = decks.flatMap(deck => {
+			let insertTitle = deck.cards.map(card => {
+				return {
+					deckPosition: deck.position,
+					title: deck.title,
+					...card
+				}
+			})
+			return insertTitle
+		})
+		allCards.forEach(card => {
+			new Date()>card.quiz_date?quizDeck.push(card):null;
+		})
+		return quizDeck
+	}
 	let cards = targeted_deck.cards;
 	let spaceR = targeted_deck.deck_type
 	let quizDeck = [];
@@ -752,6 +790,62 @@ function selectCardForQuiz() {
 	return quizDeck;
 }
 
+function sortCards(cards) {
+	let newCards = [],
+			overDelayed = [], 
+			slightlyDelayed = [],
+			maxDelay = 0;
+	cards.forEach(card => {
+		let Days_delayed = Math.floor((Date.now() - card.quiz_date) / (1000 * 3600 * 24))
+		switch (card.box) {
+			case 1:
+				maxDelay = 1;
+				break;
+			case 2:
+				maxDelay = 1;
+				break;
+			case 3:
+				maxDelay = 3;
+				break;
+			case 4:
+				maxDelay = 5;
+				break;
+			case 5:
+				maxDelay = 7;
+				break;
+			case 6:
+				maxDelay = 7;
+				break;
+			case 7:
+				maxDelay = 14;
+				break;
+			case 1:
+				maxDelay = 14;
+				break;
+		}
+		if (Days_delayed > 19000) {
+			newCards.push({
+				deckPosition: targeted_deck.position,
+				days_delayed: Days_delayed,
+				...card})
+		} else if (Days_delayed >= maxDelay) {
+			overDelayed.push({
+				deckPosition: targeted_deck.position,
+				days_delayed: Days_delayed,
+				...card})
+		} else {
+			slightlyDelayed.push({
+				deckPosition: targeted_deck.position,
+				days_delayed: Days_delayed,
+				...card})
+		}
+	})
+	overDelayed.sort(function (x, y) { return y.box - x.box || y.days_delayed - x.days_delayed || 0.5 - Math.random(); })
+	slightlyDelayed.sort(function (x, y) { return x.box - y.box || y.days_delayed - x.days_delayed || 0.5 - Math.random(); })
+	newCards.sort(function (x, y) { return 0.5 - Math.random(); })
+	return [...overDelayed, ...slightlyDelayed, ...newCards];
+}
+
 function autocheckAns() {
 	$("form#quizAns").keyup((e) => {
 		let a = targeted_card.a;
@@ -766,6 +860,10 @@ function autocheckAns() {
 
 function adjustCard(result) {
 	let type = targeted_deck.deck_type;
+	if (targeted_deck === 'all') { 
+		type = true 
+	}
+	targeted_card = decks[targeted_card.deckPosition - 1]['cards'][targeted_card.position - 1];
 	//add cd to active recall card
 	if (!type) {
 		targeted_deck.cards.forEach(card => {
@@ -776,7 +874,6 @@ function adjustCard(result) {
 	switch(true) {
 		//space repetition card correct;
 		case (type && result):
-
 			targeted_card['tier']++;
 			
 			
@@ -1012,4 +1109,10 @@ function shuffle(array) {
     array[randomIndex] = temporaryValue;
   }
   return array;
+}
+
+const quizzAllBtn = document.getElementById('quizzAll')
+quizzAllBtn.onclick = e => {
+	e.preventDefault()
+	startQuiz('all')
 }
